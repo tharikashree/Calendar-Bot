@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 import json
 
-
 st.title("📅 Gemini Calendar Assistant")
 
 if "chat" not in st.session_state:

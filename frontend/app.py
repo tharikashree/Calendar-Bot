@@ -1,25 +1,7 @@
-
-# import streamlit as st
-# import requests
-
-# st.title("📅 Gemini Calendar Assistant")
-
-# if "chat" not in st.session_state:
-#     st.session_state.chat = []
-
-# user_input = st.chat_input("Schedule your meeting...")
-# if user_input:
-#     st.session_state.chat.append({"role": "user", "content": user_input})
-#     with st.spinner("Thinking..."):
-#         res = requests.post("http://localhost:8000/chat", json={"message": user_input})
-#         bot_reply = res.json().get("reply", "Something went wrong.")
-#         st.session_state.chat.append({"role": "bot", "content": bot_reply})
-
-# for msg in st.session_state.chat:
-#     st.chat_message(msg["role"]).write(msg["content"])
 import streamlit as st
 import requests
 import json
+
 
 st.title("📅 Gemini Calendar Assistant")
 

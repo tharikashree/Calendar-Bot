@@ -11,7 +11,7 @@ This is an AI-powered calendar booking assistant using FastAPI, LangGraph, Strea
 
 1. Create a service account in Google Cloud Console.
 2. Share your Google Calendar with the service account.
-3. Put the JSON file in `credentials/service_account.json`.
+3. Put the JSON file `service_account.json`.
 4. Add your `.env` file with GEMINI key and Calendar ID.
 
 ## Run Locally

@@ -170,13 +170,16 @@ st.markdown("""
 if "chat" not in st.session_state:
     st.session_state.chat = []
 
+if "context" not in st.session_state:
+    st.session_state.context = {}
+
 def format_response(reply):
     if isinstance(reply, dict) and reply.get("status") == "success":
         event_link = reply.get('eventLink', '')
         return (
             f"✅ **Event Created Successfully!**\n\n"
             f"🆔 **Event ID:** `{reply['eventId']}`\n\n"
-            f"🔗 **Event Link:** 📅 [**Click here to open your event in Google Calendar**]({event_link})\n\n"
+            f"🔗 **Event Link:** [**Click here to open your event in Google Calendar**]({event_link})\n\n"
         )
     elif isinstance(reply, dict) and reply.get("status") == "error":
         return f"❌ **Error:** {reply.get('message', 'Something went wrong.')}"
@@ -210,10 +213,16 @@ user_input = st.chat_input("✨ Tell me what you'd like to schedule...")
 if user_input:
     st.session_state.chat.append({"role": "user", "content": user_input})
     with st.spinner("🤔 Let me help you with that..."):
-        res = requests.post("http://localhost:8000/chat", json={"message": user_input})
+        res = requests.post("http://localhost:8000/chat", json={
+        "message": user_input,
+        "context": st.session_state.context
+    })
+
         try:
-            raw_reply = res.json().get("reply", "Something went wrong.")
+            data = res.json()
+            raw_reply = data.get("reply", "Something went wrong.")
             print(raw_reply)  # Debugging line to see raw reply
+            st.session_state.context = data.get("context", {})
             # Try to parse reply as dict if it looks like one
             if isinstance(raw_reply, str) and raw_reply.strip().startswith("{"):
                 try:
